@@ -1,9 +1,11 @@
-FROM centos:centos6  
-RUN curl -sL https://rpm.nodesource.com/setup | bash -  
+FROM centos:7  
+RUN curl -sL https://rpm.nodesource.com/setup | bash - \
+  && mkdir -p /src
 RUN yum install -y nodejs  
-ADD src/* /src/
 
-WORKDIR /src  
-RUN npm install  
+WORKDIR /src
+ADD src/package.json /src/
+RUN npm install
+ADD src/* /src/
 EXPOSE 8080  
 CMD ["node", "app.js"]
